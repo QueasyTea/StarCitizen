@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 
 
 import ru.geekbrains.base.BaseScreen;
+import ru.geekbrains.math.Rect;
+import ru.geekbrains.sprite.Logo;
 
 public class MenuScreen extends BaseScreen {
 
@@ -17,34 +19,34 @@ public class MenuScreen extends BaseScreen {
     private Vector2 touch;
     private Vector2 v;
     private Vector2 tmp;
+    private Logo logo;
 
 
 
     @Override
     public void show() {
         super.show();
-        img = new Texture("front.jpg");
+        img = new Texture("badlogic.jpg");
         pos = new Vector2();
         touch = new Vector2();
         v = new Vector2();
         tmp = new Vector2();
+        logo = new Logo(img);
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
-        tmp.set(touch);
-        if(touch.cpy().sub(pos).len() > v.len()){
-            pos.add(v);
-        } else {
-            pos.set(touch);
-        }
-        Gdx.gl.glClearColor(0.5f, 0.23f, 0.9f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
-        batch.draw(img, pos.x,pos.y);
-        batch.end();
+        update(delta);
+        draw();
 
+
+    }
+
+    @Override
+    public void resize(Rect worldBounds) {
+        super.resize(worldBounds);
+        logo.resize(worldBounds);
     }
 
     @Override
@@ -55,6 +57,7 @@ public class MenuScreen extends BaseScreen {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        logo.touchDown(touch,pointer,button);
         touch.set(screenX, Gdx.graphics.getHeight() - screenY);
 
 
@@ -62,5 +65,26 @@ public class MenuScreen extends BaseScreen {
 
 
         return false;
+    }
+
+    private void update(float delta){
+        logo.update(delta);
+    }
+
+
+
+    private void draw(){
+        tmp.set(touch);
+        if(touch.cpy().sub(pos).len() > v.len()){
+            pos.add(v);
+        } else {
+            pos.set(touch);
+        }
+        Gdx.gl.glClearColor(0.5f, 0.23f, 0.9f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        batch.begin();
+        batch.draw(img, pos.x,pos.y);
+        logo.draw(batch);
+        batch.end();
     }
 }
