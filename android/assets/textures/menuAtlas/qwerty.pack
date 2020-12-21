@@ -1,0 +1,73 @@
+
+qwerty.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+boom1
+  rotate: false
+  xy: 1, 219
+  size: 954, 802
+  orig: 954, 802
+  offset: 0, 0
+  index: -1
+Frag1
+  rotate: false
+  xy: 1, 1
+  size: 162, 216
+  orig: 162, 216
+  offset: 0, 0
+  index: -1
+Frag2
+  rotate: false
+  xy: 165, 34
+  size: 137, 183
+  orig: 137, 183
+  offset: 0, 0
+  index: -1
+tbExit
+  rotate: false
+  xy: 304, 89
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+tbPlay
+  rotate: false
+  xy: 434, 89
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+
+qwerty2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+oStar
+  rotate: false
+  xy: 1, 294
+  size: 600, 574
+  orig: 600, 574
+  offset: 0, 0
+  index: -1
+mainShip
+  rotate: false
+  xy: 1, 1
+  size: 173, 291
+  orig: 173, 291
+  offset: 0, 0
+  index: -1
+mainShipDmg
+  rotate: false
+  xy: 603, 577
+  size: 173, 291
+  orig: 173, 291
+  offset: 0, 0
+  index: -1
+Frag
+  rotate: false
+  xy: 176, 44
+  size: 147, 248
+  orig: 147, 248
+  offset: 0, 0
+  index: -1
