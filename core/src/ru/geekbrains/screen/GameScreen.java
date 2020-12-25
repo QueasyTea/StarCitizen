@@ -2,6 +2,7 @@ package ru.geekbrains.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -10,25 +11,32 @@ import com.badlogic.gdx.math.Vector2;
 import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.pool.BulletPool;
+import ru.geekbrains.pool.EnemyPool;
 import ru.geekbrains.sprite.Background;
 import ru.geekbrains.sprite.MainShip;
 import ru.geekbrains.sprite.Star;
+import ru.geekbrains.utils.EnemyEmitter;
 
 
 public class GameScreen extends BaseScreen {
 
-    private static final int STAR_COUNT = 64;
+    private static final int STAR_COUNT = 128;
 
     private Texture bg;
     private Background background;
-    private TextureAtlas atlas;
 
+    private TextureAtlas atlas;
     private Star[] stars;
 
     private BulletPool bulletPool;
+    private EnemyPool enemyPool;
+
+    private EnemyEmitter enemyEmitter;
+
     private MainShip mainShip;
 
     private Music music;
+    private Sound bulletSound;
 
 
 
@@ -46,9 +54,10 @@ public class GameScreen extends BaseScreen {
             stars[i] = new Star(atlas);
         }
         bulletPool = new BulletPool();
-
+        enemyPool = new EnemyPool(bulletPool, worldBounds);
         mainShip = new MainShip(atlas, bulletPool);
-
+        bulletSound = Gdx.audio.newSound(Gdx.files.internal("sounds/bullet.wav"));
+        enemyEmitter = new EnemyEmitter(atlas, worldBounds, bulletSound, enemyPool);
         music = Gdx.audio.newMusic(Gdx.files.internal("android/sounds/music.mp3"));
         music.setLooping(true);
         music.play();
@@ -79,6 +88,7 @@ public class GameScreen extends BaseScreen {
         atlas.dispose();
         bulletPool.dispose();
         music.dispose();
+        bulletSound.dispose();
         mainShip.dispose();
         super.dispose();
     }
