@@ -11,9 +11,11 @@ import ru.geekbrains.base.Ship;
 import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.pool.BulletPool;
+import ru.geekbrains.pool.ExplosionPool;
 
 public class MainShip extends Ship {
 
+    private  static final int HP = 10;
     private static final float RELOAD_INTERVAL = 0.2f;
 
     private static final float HEIGHT = 0.15f;
@@ -32,8 +34,8 @@ public class MainShip extends Ship {
 
 
 
-    public MainShip(TextureAtlas atlas, BulletPool bulletPool) {
-        super(atlas.findRegion("mainShip"), 1, 2, 2, bulletPool);
+    public MainShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool) {
+        super(atlas.findRegion("mainShip"), 1, 2, 2, bulletPool, explosionPool);
         bulletRegion = atlas.findRegion("bullet");
         bulletSound = Gdx.audio.newSound(Gdx.files.internal("android/sounds/laser.wav"));
         bulletV = new Vector2(0, 0.5f);
@@ -42,6 +44,20 @@ public class MainShip extends Ship {
         damage = 1;
         v = new Vector2();
         v0 = new Vector2(0.5f, 0);
+        reloadInterval = RELOAD_INTERVAL;
+        hp = HP;
+    }
+
+    public void startNewGame(){
+        pressedLeft = false;
+        pressedRight = false;
+        leftPointer = INVALID_POINTER;
+        rightPointer = INVALID_POINTER;
+        stop();
+        this.pos.x = worldBounds.pos.x;
+        hp = HP;
+        flushDestroy();
+
     }
 
     @Override
@@ -147,6 +163,13 @@ public class MainShip extends Ship {
 
     public void dispose(){
         bulletSound.dispose();
+    }
+
+    public boolean isBulletCollision(Bullet bullet) {
+        return !(bullet.getRight() < getLeft()
+                || bullet.getLeft() > getRight()
+                || bullet.getBottom() > pos.y
+                || bullet.getTop() < getBottom());
     }
 
 
