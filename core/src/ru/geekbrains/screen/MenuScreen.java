@@ -2,13 +2,10 @@ package ru.geekbrains.screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-
 
 import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.math.Rect;
@@ -16,7 +13,6 @@ import ru.geekbrains.sprite.Background;
 import ru.geekbrains.sprite.ButtonExit;
 import ru.geekbrains.sprite.ButtonPlay;
 import ru.geekbrains.sprite.Star;
-
 
 public class MenuScreen extends BaseScreen {
 
@@ -37,29 +33,18 @@ public class MenuScreen extends BaseScreen {
         this.game = game;
     }
 
-
-    private Music music;
-
-
     @Override
     public void show() {
         super.show();
-        bg = new Texture("android/assets/front.jpg");
+        bg = new Texture("textures/front.jpg");
         background = new Background(bg);
-        atlas = new TextureAtlas("textures/menuAtlas");
+        atlas = new TextureAtlas("textures/b.pack");
         stars = new Star[STAR_COUNT];
-        for (int i = 0; i < STAR_COUNT; i++){
+        for (int i = 0; i < STAR_COUNT; i++) {
             stars[i] = new Star(atlas);
         }
         buttonExit = new ButtonExit(atlas);
         buttonPlay = new ButtonPlay(atlas, game);
-        music = Gdx.audio.newMusic(Gdx.files.internal("android/sounds/music.mp3"));
-        music.setLooping(true);
-        music.play();
-
-
-
-
     }
 
     @Override
@@ -67,14 +52,12 @@ public class MenuScreen extends BaseScreen {
         super.render(delta);
         update(delta);
         draw();
-
     }
 
     @Override
     public void dispose() {
         bg.dispose();
         atlas.dispose();
-        music.dispose();
         super.dispose();
     }
 
@@ -84,34 +67,28 @@ public class MenuScreen extends BaseScreen {
         for (Star star : stars) {
             star.resize(worldBounds);
         }
-
         buttonExit.resize(worldBounds);
         buttonPlay.resize(worldBounds);
-
     }
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer, int button) {
-        buttonExit.touchDown(touch,pointer,button);
-        buttonPlay.touchDown(touch,pointer,button);
-
+        buttonExit.touchDown(touch, pointer, button);
+        buttonPlay.touchDown(touch, pointer, button);
         return false;
     }
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer, int button) {
-        buttonExit.touchUp(touch,pointer,button);
-        buttonPlay.touchUp(touch,pointer,button);
-
+        buttonExit.touchUp(touch, pointer, button);
+        buttonPlay.touchUp(touch, pointer, button);
         return false;
     }
 
     private void update(float delta) {
-        for (Star star : stars){
+        for (Star star : stars) {
             star.update(delta);
         }
-
-
     }
 
     private void draw() {
@@ -124,8 +101,6 @@ public class MenuScreen extends BaseScreen {
         }
         buttonExit.draw(batch);
         buttonPlay.draw(batch);
-
         batch.end();
-
     }
 }
