@@ -16,7 +16,7 @@ public class ButtonExit extends BaseButton {
 
 
     public ButtonExit(TextureAtlas atlas) {
-        super(atlas.findRegion("Exit"));
+        super(atlas.findRegion("toExit"));
     }
 
     @Override

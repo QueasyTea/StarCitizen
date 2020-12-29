@@ -3,7 +3,6 @@ package ru.geekbrains.sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 
-
 import ru.geekbrains.base.Sprite;
 import ru.geekbrains.math.Rect;
 import ru.geekbrains.math.Rnd;
@@ -13,13 +12,8 @@ public class Star extends Sprite {
     private static final float MIN_HEIGHT = 0.005f;
     private static final float MAX_HEIGHT = 0.011f;
 
-    private final Vector2 v;
+    protected final Vector2 v;
     private Rect worldBounds;
-
-
-
-
-
 
     public Star(TextureAtlas atlas) {
         super(atlas.findRegion("Star"));
@@ -39,22 +33,24 @@ public class Star extends Sprite {
 
     @Override
     public void update(float delta) {
-        super.update(delta);
         pos.mulAdd(v, delta);
+        checkBounds();
+        changeHeight();
+    }
+
+    protected void checkBounds() {
         if (getRight() < worldBounds.getLeft()) setLeft(worldBounds.getRight());
         if (getLeft() > worldBounds.getRight()) setRight(worldBounds.getLeft());
         if (getTop() < worldBounds.getBottom()) setBottom(worldBounds.getTop());
-        changeHeight();
-
-
     }
-    private void changeHeight(){
+
+    protected void changeHeight() {
+        
+
         float height = getHeight() + 0.00001f;
         if (height > MAX_HEIGHT) {
             height = MIN_HEIGHT;
         }
         setHeightProportion(height);
     }
-
-
 }
